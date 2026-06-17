@@ -233,10 +233,31 @@ export default function Home() {
     { id: "audit", label: "অডিট", icon: "◈" },
     { id: "settings", label: "সেটিংস", icon: "⚙" },
   ];
+  const activeNavItem = navItems.find((item) => item.id === activeTab) ?? navItems[0];
 
   return (
     <main className="web-stage">
       <section className="phone-app" aria-label="Tax Calculator Bd web app">
+        <header className="desktop-app-bar">
+          <div className="desktop-brand">
+            <span className="desktop-logo">BD</span>
+            <span>
+              <strong>Tax Calculator Bd</strong>
+              <small>BDTaxCalculator web app</small>
+            </span>
+          </div>
+          <div className="desktop-context">
+            <span>{activeNavItem.label}</span>
+            <strong>করবর্ষ {TAX_YEAR}</strong>
+          </div>
+          <div className="desktop-actions">
+            <span className="live-pill">Live</span>
+            <button type="button" onClick={() => setActiveTab("calculator")}>
+              দ্রুত হিসাব
+            </button>
+          </div>
+        </header>
+
         {activeTab === "home" ? (
           <div className="screen-content home-screen">
             <div className="top-bar">

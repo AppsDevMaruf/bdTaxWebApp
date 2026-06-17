@@ -95,6 +95,10 @@ button {
   position: relative;
 }
 
+.desktop-app-bar {
+  display: none;
+}
+
 .screen-content {
   background: var(--panel);
   min-height: calc(100vh - 86px);
@@ -657,20 +661,325 @@ button {
   text-align: right;
 }
 
-@media (min-width: 860px) {
+@media (min-width: 980px) {
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(31, 122, 57, 0.18), transparent 28vw),
+      radial-gradient(circle at bottom right, rgba(13, 71, 161, 0.08), transparent 30vw),
+      linear-gradient(135deg, #f5fbf6, #ecf5ef);
+  }
+
+  .web-stage {
+    display: grid;
+    padding: 24px;
+    place-items: center;
+  }
+
   .phone-app {
     border: 1px solid rgba(31, 122, 57, 0.12);
-    border-radius: 28px;
-    max-height: calc(100vh - 56px);
+    border-radius: 24px;
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    grid-template-rows: 78px minmax(0, 1fr);
+    height: calc(100vh - 48px);
+    max-height: none;
+    max-width: 1280px;
+    min-height: 720px;
+    width: min(1280px, 100%);
+  }
+
+  .desktop-app-bar {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom: 1px solid #edf1ed;
+    display: grid;
+    gap: 18px;
+    grid-column: 2;
+    grid-row: 1;
+    grid-template-columns: minmax(260px, 1fr) auto auto;
+    padding: 16px 24px;
+  }
+
+  .desktop-brand {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .desktop-logo {
+    align-items: center;
+    background: var(--primary);
+    border-radius: 14px;
+    color: #ffffff;
+    display: inline-flex;
+    font-family: "Quicksand Local", Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    height: 44px;
+    justify-content: center;
+    width: 44px;
+  }
+
+  .desktop-brand strong,
+  .desktop-brand small,
+  .desktop-context span,
+  .desktop-context strong {
+    display: block;
+  }
+
+  .desktop-brand strong {
+    color: var(--primary-dark);
+    font-family: "Quicksand Local", "Tiro Bangla Local", sans-serif;
+    font-size: 18px;
+    line-height: 1.1;
+  }
+
+  .desktop-brand small {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 3px;
+  }
+
+  .desktop-context {
+    border-left: 1px solid var(--border);
+    padding-left: 18px;
+  }
+
+  .desktop-context span {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .desktop-context strong {
+    color: #102016;
+    font-size: 15px;
+    margin-top: 2px;
+  }
+
+  .desktop-actions {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+  }
+
+  .desktop-actions button {
+    background: var(--primary);
+    border: 0;
+    border-radius: 12px;
+    color: #ffffff;
+    font-weight: 800;
+    min-height: 42px;
+    padding: 0 16px;
+  }
+
+  .live-pill {
+    align-items: center;
+    background: #e7f8ed;
+    border-radius: 999px;
+    color: var(--positive);
+    display: inline-flex;
+    font-family: "Quicksand Local", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    min-height: 30px;
+    padding: 0 12px;
   }
 
   .screen-content {
-    max-height: calc(100vh - 142px);
+    grid-column: 2;
+    grid-row: 2;
+    max-height: none;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 26px;
   }
 
   .bottom-nav {
-    border-radius: 0 0 28px 28px;
-    bottom: 28px;
+    align-content: start;
+    align-items: stretch;
+    background: #fbfdfb;
+    border-right: 1px solid #edf1ed;
+    border-top: 0;
+    bottom: auto;
+    display: grid;
+    gap: 8px;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    grid-template-columns: 1fr;
+    height: 100%;
+    left: auto;
+    max-width: none;
+    padding: 96px 16px 18px;
+    position: relative;
+    transform: none;
+    width: auto;
+  }
+
+  .bottom-nav::before {
+    color: var(--primary-dark);
+    content: "Tax Calculator Bd";
+    font-family: "Quicksand Local", "Tiro Bangla Local", sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    left: 20px;
+    position: absolute;
+    top: 24px;
+  }
+
+  .bottom-nav::after {
+    color: var(--muted);
+    content: "Web workspace";
+    font-family: "Quicksand Local", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    left: 20px;
+    position: absolute;
+    top: 50px;
+  }
+
+  .nav-item {
+    border-radius: 14px;
+    display: flex;
+    font-size: 15px;
+    gap: 12px;
+    justify-content: flex-start;
+    min-height: 52px;
+    padding: 0 12px;
+    text-align: left;
+  }
+
+  .nav-item span {
+    border-radius: 12px;
+    font-size: 20px;
+    height: 36px;
+    width: 36px;
+  }
+
+  .nav-item.active {
+    background: var(--soft-green);
+  }
+
+  .home-screen {
+    align-content: start;
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .home-screen .top-bar,
+  .home-screen .welcome-copy {
+    grid-column: 1 / -1;
+  }
+
+  .home-screen .top-bar {
+    display: none;
+  }
+
+  .welcome-copy {
+    background:
+      linear-gradient(135deg, rgba(31, 122, 57, 0.13), rgba(31, 122, 57, 0.03)),
+      #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    margin-bottom: 0;
+    padding: 28px;
+  }
+
+  .welcome-copy h2 {
+    font-size: 44px;
+  }
+
+  .welcome-copy p {
+    font-size: 22px;
+    max-width: 760px;
+  }
+
+  .home-screen > .service-card {
+    margin-bottom: 0;
+  }
+
+  .home-screen > .service-card:nth-of-type(1),
+  .home-screen > .service-card:nth-of-type(2) {
+    grid-column: span 6;
+  }
+
+  .home-screen > .service-card.compact {
+    grid-column: 1 / -1;
+  }
+
+  .service-card {
+    border-radius: 20px;
+    min-height: 250px;
+    padding: 24px;
+  }
+
+  .service-card h3 {
+    font-size: 34px;
+    margin-top: 24px;
+  }
+
+  .service-card p {
+    font-size: 19px;
+  }
+
+  .card-action {
+    border-radius: 12px;
+    min-height: 54px;
+  }
+
+  .calculator-screen {
+    align-content: start;
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .calculator-screen .calc-top,
+  .calculator-screen .overview-card {
+    grid-column: 1 / -1;
+  }
+
+  .calculator-screen .panel-card {
+    margin-bottom: 0;
+  }
+
+  .calculator-screen .panel-card:nth-of-type(2),
+  .calculator-screen .panel-card:nth-of-type(3) {
+    grid-column: span 6;
+  }
+
+  .calculator-screen .panel-card:nth-of-type(4),
+  .calculator-screen .panel-card:nth-of-type(5) {
+    grid-column: span 6;
+  }
+
+  .calculator-screen .panel-card:nth-of-type(6),
+  .calculator-screen .panel-card:nth-of-type(7) {
+    grid-column: span 6;
+  }
+
+  .stat-row {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .audit-screen,
+  .settings-screen {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .audit-screen .calc-top,
+  .settings-screen .calc-top {
+    grid-column: 1 / -1;
+  }
+
+  .audit-screen .service-card,
+  .settings-screen .panel-card {
+    grid-column: span 6;
+    margin-bottom: 0;
   }
 }
 
