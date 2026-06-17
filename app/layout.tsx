@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "BDTaxCalculator - Bangladesh Income Tax Calculator",
+  title: "Tax Calculator Bd - BDTaxCalculator Web",
   description:
-    "Estimate Bangladesh individual income tax, investment rebate, minimum tax, surcharge, and payable amount.",
+    "BDTaxCalculator Android app-inspired web version for Bangladesh income tax, salary breakdown, rebate, and audit check.",
 };
 
 export default function RootLayout({
