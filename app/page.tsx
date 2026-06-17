@@ -222,6 +222,10 @@ export default function Home() {
   const monthlyTax = Math.round(tax.taxAfterRebate / 12);
   const yearlyNetIncome = Math.max(0, salary.totalIncome - tax.taxAfterRebate);
   const effectiveRate = salary.totalIncome === 0 ? 0 : (tax.taxAfterRebate * 100) / salary.totalIncome;
+  const maxAllowedRebate = Math.min(salary.taxableIncome * incomeBasedInvestmentRebateRate, maxInvestmentRebate);
+  const rebateUsagePercent = maxAllowedRebate > 0 ? Math.min(100, (investment.rebate / maxAllowedRebate) * 100) : 0;
+  const investmentNeededForMaxRebate = maxAllowedRebate > 0 ? Math.ceil(maxAllowedRebate / investmentRebateRate) : 0;
+  const remainingUsefulInvestment = Math.max(0, investmentNeededForMaxRebate - investment.totalInvestment);
 
   const updateInvestment = (id: InvestmentId, value: string) => {
     setInvestments((current) => ({ ...current, [id]: normalizeNumber(value) }));
@@ -511,7 +515,34 @@ export default function Home() {
                   />
                 </label>
               ))}
-              <p className="notice-pill">অর্জিত রিবেট: {formatNumber(investment.rebate)}</p>
+              <div className="rebate-card">
+                <div className="rebate-head">
+                  <div>
+                    <strong>বিনিয়োগ ও রিবেট</strong>
+                    <span>রিবেট সীমা ব্যবহার</span>
+                  </div>
+                  <span className="rebate-badge">✓</span>
+                </div>
+                <div className="rebate-progress-row">
+                  <div className="rebate-progress">
+                    <span style={{ width: `${rebateUsagePercent}%` }} />
+                  </div>
+                  <b>{formatPercent(rebateUsagePercent)}</b>
+                </div>
+                <div className="rebate-metrics">
+                  <div>
+                    <span>মোট বিনিয়োগ</span>
+                    <b>৳ {formatNumber(investment.totalInvestment)}</b>
+                  </div>
+                  <div>
+                    <span>অর্জিত রিবেট</span>
+                    <b>৳ {formatNumber(investment.rebate)}</b>
+                  </div>
+                </div>
+                <p>
+                  টিপস: আরও {formatNumber(remainingUsefulInvestment)} টাকা বিনিয়োগ করলে রিবেট সর্বোচ্চ সীমায় পৌঁছাবে।
+                </p>
+              </div>
               {salary.taxableIncome <= currentTaxpayer.limit ? (
                 <div className="no-tax-card">
                   <span>▧</span>
