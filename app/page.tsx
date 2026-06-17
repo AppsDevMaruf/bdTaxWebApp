@@ -56,6 +56,15 @@ const investmentOptions: Array<{ id: InvestmentId; label: string }> = [
   { id: "insurance", label: "লাইফ ইন্স্যুরেন্স" },
 ];
 
+const taxSlabRows = [
+  ["প্রথম করমুক্ত সীমা পর্যন্ত", "শূন্য"],
+  ["পরবর্তী ৩,০০,০০০ টাকা", "১০%"],
+  ["পরবর্তী ৪,০০,০০০ টাকা", "১৫%"],
+  ["পরবর্তী ৫,০০,০০০ টাকা", "২০%"],
+  ["পরবর্তী ২০,০০,০০০ টাকা", "২৫%"],
+  ["অবশিষ্ট আয়", "৩০%"],
+];
+
 const initialInvestments: Record<InvestmentId, string> = {
   dse: "",
   sanchaypatra: "",
@@ -231,7 +240,7 @@ export default function Home() {
     { id: "home", label: "হোম", icon: "⌂" },
     { id: "calculator", label: "ক্যালকুলেটর", icon: "▤" },
     { id: "audit", label: "অডিট", icon: "◈" },
-    { id: "settings", label: "সেটিংস", icon: "⚙" },
+    { id: "settings", label: "প্রোফাইল", icon: "⚙" },
   ];
   const activeNavItem = navItems.find((item) => item.id === activeTab) ?? navItems[0];
 
@@ -431,23 +440,65 @@ export default function Home() {
 
             <section className="panel-card">
               <div className="section-label">
-                <strong>বেতন কাঠামো</strong>
-                <span>অ্যাপের একই হিসাব অনুযায়ী অটো ব্রেকডাউন</span>
+                <strong>বেতন বিভাজন</strong>
+                <span>আপনার মাসিক ও বাৎসরিক আয়ের বিস্তারিত</span>
               </div>
-              <div className="breakdown-grid">
-                <StatPill label="বেসিক" value={formatNumber(salary.basicSalary)} />
-                <StatPill label="বাসা ভাড়া" value={formatNumber(salary.houseRent)} />
-                <StatPill label="মেডিকেল" value={formatNumber(salary.medical)} />
-                <StatPill label="যাতায়াত" value={formatNumber(salary.conveyance)} />
-                <StatPill label="মোট আয়" value={formatNumber(salary.totalIncome)} tone="green" />
-                <StatPill label="ছাড়" value={formatNumber(salary.totalExemption)} tone="blue" />
+              <div className="salary-detail">
+                <div className="detail-title">
+                  <span>মাসিক বিভাজন</span>
+                  <button type="button">বিস্তারিত ›</button>
+                </div>
+                <div className="detail-line">
+                  <span>মূল বেতন</span>
+                  <b>{formatNumber(salary.basicSalary)}</b>
+                </div>
+                <div className="detail-line">
+                  <span>বাড়ি ভাড়া (মূল বেতনের ৫০%)</span>
+                  <b>{formatNumber(salary.houseRent)}</b>
+                </div>
+                <div className="detail-line">
+                  <span>চিকিৎসা (মূল বেতনের ১০%)</span>
+                  <b>{formatNumber(salary.medical)}</b>
+                </div>
+                <div className="detail-line">
+                  <span>যাতায়াত (নির্ধারিত)</span>
+                  <b>{formatNumber(salary.conveyance)}</b>
+                </div>
+                <div className="detail-line strong">
+                  <span>মোট মাসিক</span>
+                  <b>{formatNumber(salary.grossSalary)}</b>
+                </div>
+
+                <div className="detail-title yearly">
+                  <span>বাৎসরিক হিসাব</span>
+                  <button type="button">শতাংশ দেখুন ›</button>
+                </div>
+                <div className="detail-line">
+                  <span>মোট বাৎসরিক বেতন</span>
+                  <b>{formatNumber(salary.grossSalary * 12)}</b>
+                </div>
+                <div className="detail-line">
+                  <span>বোনাস</span>
+                  <b>{formatNumber(salary.yearlyBonus)}</b>
+                </div>
+                <div className="detail-line rebate">
+                  <span>করযোগ্য ছাড়</span>
+                  <b>-{formatNumber(salary.totalExemption)}</b>
+                </div>
+                <div className="detail-line strong positive">
+                  <span>নিট করযোগ্য আয়</span>
+                  <b>{formatNumber(salary.taxableIncome)}</b>
+                </div>
               </div>
             </section>
 
             <section className="panel-card">
-              <div className="section-label">
-                <strong>বিনিয়োগ রিবেট</strong>
-                <span>DSE, সঞ্চয়পত্র, DPS, ফান্ড ও ইন্স্যুরেন্স</span>
+              <div className="section-label row-label">
+                <span>
+                  <strong>বিনিয়োগ রিবেট</strong>
+                  <small>আপনার বিনিয়োগের তথ্য দিন</small>
+                </span>
+                <button type="button">বিনিয়োগ যোগ করুন ›</button>
               </div>
               {investmentOptions.map((item) => (
                 <label className="money-input slim" key={item.id}>
@@ -461,6 +512,15 @@ export default function Home() {
                 </label>
               ))}
               <p className="notice-pill">অর্জিত রিবেট: {formatNumber(investment.rebate)}</p>
+              {salary.taxableIncome <= currentTaxpayer.limit ? (
+                <div className="no-tax-card">
+                  <span>▧</span>
+                  <div>
+                    <b>কর প্রযোজ্য নয়</b>
+                    <small>আপনার আয় {formatNumber(currentTaxpayer.limit)} টাকার করমুক্ত সীমার মধ্যে আছে।</small>
+                  </div>
+                </div>
+              ) : null}
             </section>
 
             <section className="panel-card">
@@ -492,6 +552,24 @@ export default function Home() {
                   </div>
                 </div>
               )}
+            </section>
+
+            <section className="panel-card slab-card">
+              <div className="section-label row-label">
+                <span>
+                  <strong>স্ট্যান্ডার্ড কর ধাপ ({TAX_YEAR})</strong>
+                  <small>বাংলাদেশ জাতীয় রাজস্ব বোর্ড (NBR) অনুযায়ী</small>
+                </span>
+                <button type="button">›</button>
+              </div>
+              <div className="slab-list">
+                {taxSlabRows.map(([label, rate]) => (
+                  <div className="slab-row" key={label}>
+                    <span>{label}</span>
+                    <b>{rate}</b>
+                  </div>
+                ))}
+              </div>
             </section>
           </div>
         ) : null}
@@ -541,7 +619,7 @@ export default function Home() {
           <div className="screen-content settings-screen">
             <div className="calc-top">
               <div>
-                <h1>সেটিংস</h1>
+                <h1>প্রোফাইল</h1>
                 <p>ওয়েব সংস্করণ</p>
               </div>
               <IconTile soft>⚙</IconTile>

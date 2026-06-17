@@ -661,6 +661,165 @@ button {
   text-align: right;
 }
 
+.row-label {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.row-label > span {
+  display: grid;
+  gap: 5px;
+}
+
+.row-label small {
+  color: #79867f;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.row-label button,
+.detail-title button {
+  background: transparent;
+  border: 0;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 800;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.salary-detail {
+  display: grid;
+  gap: 8px;
+}
+
+.detail-title {
+  align-items: center;
+  color: var(--primary);
+  display: flex;
+  font-size: 15px;
+  font-weight: 800;
+  justify-content: space-between;
+  margin-top: 2px;
+}
+
+.detail-title.yearly {
+  color: var(--info);
+  margin-top: 16px;
+}
+
+.detail-line {
+  align-items: center;
+  border-bottom: 1px solid #edf1ed;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  min-height: 34px;
+  padding: 5px 0;
+}
+
+.detail-line span {
+  color: #4a554f;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.detail-line b {
+  color: #102016;
+  font-family: "Quicksand Local", "Tiro Bangla Local", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  text-align: right;
+}
+
+.detail-line.strong {
+  border-bottom: 0;
+  margin-top: 2px;
+}
+
+.detail-line.rebate b {
+  color: var(--danger);
+}
+
+.detail-line.positive b {
+  color: var(--primary);
+}
+
+.no-tax-card {
+  align-items: center;
+  background: #e3f2fd;
+  border: 1px solid #d5ebfc;
+  border-radius: 20px;
+  display: flex;
+  gap: 14px;
+  margin-top: 16px;
+  padding: 18px;
+}
+
+.no-tax-card > span {
+  align-items: center;
+  color: var(--info);
+  display: inline-flex;
+  font-family: "Quicksand Local", Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  justify-content: center;
+}
+
+.no-tax-card b,
+.no-tax-card small {
+  display: block;
+}
+
+.no-tax-card b {
+  color: var(--info);
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.no-tax-card small {
+  color: #4a6f8f;
+  font-size: 13px;
+  line-height: 1.55;
+  margin-top: 5px;
+}
+
+.slab-card {
+  margin-bottom: 0;
+}
+
+.slab-list {
+  display: grid;
+  gap: 8px;
+}
+
+.slab-row {
+  align-items: center;
+  background: #f8faf8;
+  border: 1px solid #eef2f1;
+  border-radius: 12px;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  padding: 12px;
+}
+
+.slab-row span {
+  color: #4a554f;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.slab-row b {
+  color: var(--primary);
+  font-family: "Quicksand Local", "Tiro Bangla Local", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
 @media (min-width: 980px) {
   body {
     background:
@@ -942,6 +1101,7 @@ button {
   }
 
   .calculator-screen .panel-card {
+    grid-column: span 6;
     margin-bottom: 0;
   }
 
@@ -956,7 +1116,8 @@ button {
   }
 
   .calculator-screen .panel-card:nth-of-type(6),
-  .calculator-screen .panel-card:nth-of-type(7) {
+  .calculator-screen .panel-card:nth-of-type(7),
+  .calculator-screen .panel-card:nth-of-type(8) {
     grid-column: span 6;
   }
 
